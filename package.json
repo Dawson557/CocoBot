@@ -7,7 +7,7 @@
     "node": "12.14.0"
   },
   "scripts": {
-    "start": "echo No start script",
+    "start": "node dist/bot/app.js",
     "build": "rm -rf dist && npm run build-ts",
     "build2": "npm run build-ts && npm run lint && npm run copy-static-assets",
     "test": "echo No test script",
