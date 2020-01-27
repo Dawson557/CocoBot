@@ -1,0 +1,1 @@
+web: node dist/bot/app.js

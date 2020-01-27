@@ -1,0 +1,50 @@
+{
+  "name": "cocobot",
+  "version": "1.0.0",
+  "description": "A bot to help manage the course assignations for Concordia's ENGR discord server.",
+  "main": "dist/bot/app.js",
+  "engines": {
+    "node": "12.14.0"
+  },
+  "scripts": {
+    "start": "echo No start script",
+    "build": "rm -rf dist && npm run build-ts",
+    "build2": "npm run build-ts && npm run lint && npm run copy-static-assets",
+    "test": "echo No test script",
+    "watch-test": "npm run test -- --watchAll",
+    "build-ts": "tsc",
+    "watch-ts": "tsc -w",
+    "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
+    "copy-static-assets": "ts-node copyStaticAssets.ts",
+    "debug": "npm run build && npm run watch-debug"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sandraroz/CocoBot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sandraroz/CocoBot/issues"
+  },
+  "homepage": "https://github.com/sandraroz/CocoBot#readme",
+  "dependencies": {
+    "acorn": "^7.0.0",
+    "axios": "^0.19.0",
+    "discord.js": "git://github.com/discordjs/discord.js.git#4c088123026e520f46cb4ee21bb90140d2501215"
+  },
+  "devDependencies": {
+    "@types/node": "^12.7.2",
+    "@types/shelljs": "^0.8.5",
+    "@types/ws": "^6.0.3",
+    "@typescript-eslint/eslint-plugin": "^1.13.0",
+    "@typescript-eslint/parser": "^1.13.0",
+    "concurrently": "^4.1.2",
+    "eslint": "^5.0.0",
+    "jest": "^24.9.0",
+    "nodemon": "^1.19.1",
+    "shelljs": "^0.8.3",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.6.2"
+  }
+}
