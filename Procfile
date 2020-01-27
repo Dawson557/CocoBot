@@ -1,1 +1,1 @@
-web: node dist/bot/app.js
+worker: node dist/bot/app.js
