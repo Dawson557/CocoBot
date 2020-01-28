@@ -225,7 +225,7 @@ export default class Helper extends Discord.Guild {
     public async parseCourseRoleManagementCommand(message: Discord.Message, params: CommandParameters): Promise<{role: Discord.Role; channelDesiredName: string}> {
         const allowedPrefixes = Object.values(CourseCodePrefixes);
 
-        const channelDesiredName = params.args[0];
+        const channelDesiredName = params.args[0].toLowerCase();
 
         const isValidCmd = allowedPrefixes.some(e => channelDesiredName.startsWith(e));
 
@@ -236,7 +236,7 @@ export default class Helper extends Discord.Guild {
         if (!roles) { throw new Error("> Sadly something went wrong when trying to get the server roles. @MODS 👑, help!"); } 
 
         const role = roles
-            .filter(e => e.name === channelDesiredName)
+            .filter(e => e.name.toLowerCase() === channelDesiredName)
             .first();
 
         if (!role) { throw new Error(`> Sadly no role was found with the name ${channelDesiredName}. @MODS 👑, help!`); }
@@ -247,7 +247,7 @@ export default class Helper extends Discord.Guild {
         
         const channel = channels
             .filter(e => e !== undefined)
-            .filter(e => e.name === channelDesiredName)
+            .filter(e => e.name.toLowerCase() === channelDesiredName)
             .first();
 
         if (!channel) { throw new Error(`> Sadly no channel was found with the name ${channelDesiredName}. @MODS 👑, help!`); }

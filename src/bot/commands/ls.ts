@@ -22,7 +22,7 @@ export default class extends Command {
 
             const courseChannels = channels
                 .filter(e => e !== undefined)
-                .filter(e => Object.values(CourseCodePrefixes).some(ee => e.name.startsWith(ee)));
+                .filter(e => Object.values(CourseCodePrefixes).some(ee => e.name.toLowerCase().startsWith(ee)));
 
             await message.channel.send(`> The possible course channels to join are:\n> ${courseChannels.reduce((str, e) => str === "" ? `${e.name}`: `${str}, ${e.name}`, "")}`);
         } catch (error) {
