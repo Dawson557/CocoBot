@@ -239,7 +239,7 @@ export default class Helper extends Discord.Guild {
             .filter(e => e.name.toLowerCase() === channelDesiredName)
             .first();
 
-        if (!role) { throw new Error(`> Sadly no role was found with the name ${channelDesiredName}. @MODS 👑, help!`); }
+        if (!role) { throw new Error(`> Sadly no role was found with the name ${channelDesiredName}.`); }
 
         const channels = message.guild?.channels;
 
@@ -250,7 +250,7 @@ export default class Helper extends Discord.Guild {
             .filter(e => e.name.toLowerCase() === channelDesiredName)
             .first();
 
-        if (!channel) { throw new Error(`> Sadly no channel was found with the name ${channelDesiredName}. @MODS 👑, help!`); }
+        if (!channel) { throw new Error(`> Sadly no channel was found with the name ${channelDesiredName}.`); }
 
         return {
             role,
