@@ -1,10 +1,10 @@
 enum MessageIds {
 
     // COMMAND TEMPLATES
-    PingCommandTemplate = "671415775390728210",
-    JoinCommandTemplate = "671415775390728210",
-    LeaveCommandTemplate = "671415775390728210",
-    LsCommandTemplate = "671415775390728210"
+    PingCommandTemplate = "671584260406116363",
+    JoinCommandTemplate = "671584260406116363",
+    LeaveCommandTemplate = "671584260406116363",
+    LsCommandTemplate = "671584260406116363"
 }
 
 export default MessageIds;

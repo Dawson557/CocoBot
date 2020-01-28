@@ -5,6 +5,7 @@ new Client({
     runIn: [ "dev-channel" ],
     appDirName: __dirname,
     discordOptions: {
-        fetchAllMembers: true
+        fetchAllMembers: true,
+        partials: [ "MESSAGE", "CHANNEL" ]
     }
 }).start();
