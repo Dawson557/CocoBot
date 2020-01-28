@@ -1,5 +1,7 @@
 import Discord from "discord.js";
+import { CourseCodePrefixes } from "../bot/commands/ls";
 import Client from "../lib/Client";
+import CommandParameters from "../lib/CommandParameters";
 import Logger from "./Logger";
 
 type IdResolvable = string | Discord.User | Discord.GuildMember | Discord.Role | Discord.Channel;
@@ -218,6 +220,42 @@ export default class Helper extends Discord.Guild {
         });
 
         await channelToSend.send(message);
+    }
+
+    public async parseCourseRoleManagementCommand(message: Discord.Message, params: CommandParameters): Promise<{role: Discord.Role; channelDesiredName: string}> {
+        const allowedPrefixes = Object.values(CourseCodePrefixes);
+
+        const channelDesiredName = params.args[0];
+
+        const isValidCmd = allowedPrefixes.some(e => channelDesiredName.startsWith(e));
+
+        if (!isValidCmd) { throw new Error("> Nice try, poncho! Only `comp-***`, `engr-***`, `soen-***` are allowed."); }
+
+        const roles = message.guild?.roles;
+
+        if (!roles) { throw new Error("> Sadly something went wrong when trying to get the server roles. @MODS 👑, help!"); } 
+
+        const role = roles
+            .filter(e => e.name === channelDesiredName)
+            .first();
+
+        if (!role) { throw new Error(`> Sadly no role was found with the name ${channelDesiredName}. @MODS 👑, help!`); }
+
+        const channels = message.guild?.channels;
+
+        if (!channels) { throw new Error("> Sadly something went wrong when trying to get the server channels. @MODS 👑, help!"); }
+        
+        const channel = channels
+            .filter(e => e !== undefined)
+            .filter(e => e.name === channelDesiredName)
+            .first();
+
+        if (!channel) { throw new Error(`> Sadly no channel was found with the name ${channelDesiredName}. @MODS 👑, help!`); }
+
+        return {
+            role,
+            channelDesiredName
+        };
     }
 }
 

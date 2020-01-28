@@ -43,8 +43,9 @@ export default class Logger {
         try {
             console.error(this.formatLogString(data), data);
 
-            const channel = this.client.configs.channels.errorLogs;
-            await this.logToChannel(channel, data);
+            // TODO: Add a channel in configs for error logging purposes (if desired)
+            //const channel = this.client.configs.channels.errorLogs;
+            //await this.logToChannel(channel, data);
         } catch (error) {
             console.error(error);
         }
