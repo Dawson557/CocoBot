@@ -1,5 +1,5 @@
 export default {
-    guildId: "371679059329024031",
+    guildId: "276179973310775297",
     rootDirPath: process.cwd(),
     cmdPrefix: ">",
     coco: {
