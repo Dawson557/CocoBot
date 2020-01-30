@@ -1,3 +1,9 @@
+/* eslint-disable import/no-cycle */
+/* eslint-disable array-callback-return */
+/* eslint-disable import/no-dynamic-require */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-param-reassign */
 /* eslint-disable global-require */
 /* eslint-disable no-process-exit */
 /* eslint-disable no-console */
@@ -97,16 +103,16 @@ export default class Client extends Discord.Client {
             console.log("Client is ready!");
 
             const guild = this.guilds.get(config.guildId);
-            this.guild = guild ? guild : null;
+            this.guild = guild || null;
 
             this.commands = this.load<Command>("commands");
             this.monitors = this.load<Monitor>("monitors");
             this.events = this.load<Event>("events");
             this.collectors = this.load<Collector>("collectors");
 
-            console.log("\n-----------------------------------------------------------------\n" +
-                `${this.user ? this.user.tag : "null?!"}, Ready to serve ${this.guilds.size} guilds and ${this.users.size} users\n` +
-                "-----------------------------------------------------------------");
+            console.log("\n-----------------------------------------------------------------\n"
+                + `${this.user ? this.user.tag : "null?!"}, Ready to serve ${this.guilds.size} guilds and ${this.users.size} users\n`
+                + "-----------------------------------------------------------------");
 
             this.initCollectors();
 
@@ -134,15 +140,15 @@ export default class Client extends Discord.Client {
         }
     }
 
-    public async commandMessageEvent(message: Discord.Message) {
+    public async commandMessageEvent(message: Discord.Message): Promise<void> {
         try {
             await Promise.all(this.commands.map(async (command) => {
                 try {
                     const params = Utils.createCommandParametersFromMessage(message, command.lowerCaseArgs);
 
                     // Check `cmd` is a valid `command.name` or `command.aliases`
-                    if (command.name === params.cmd ||
-                        command.aliases.includes(params.cmd)) {
+                    if (command.name === params.cmd
+                        || command.aliases.includes(params.cmd)) {
                         // Check `command.enabled` is `true`
                         if (!command.enabled) { return; }
 
@@ -150,18 +156,18 @@ export default class Client extends Discord.Client {
 
                         // Check if `command.runIn` is empty (else use `client.runIn`)
                         if (command.runIn.length !== 0) { // `command.runIn = []`?
-                            if (!command.runIn.includes(channel.name) &&
-                            !command.runIn.includes(channel.type) &&
-                            !command.runIn.includes(channel.id) &&
-                            !command.runIn.includes("all") // `command.runIn[i] == 'all'`
+                            if (!command.runIn.includes(channel.name)
+                            && !command.runIn.includes(channel.type)
+                            && !command.runIn.includes(channel.id)
+                            && !command.runIn.includes("all") // `command.runIn[i] == 'all'`
                             ) {
                                 return;
                             }
                         } else { // Check `client.runIn` values to make sure bot can run in these channels
                             // eslint-disable-next-line
-                            if (!this.runIn.includes(channel.name) && // `client.runIn[i] == msg.channel.name`
-                            !this.runIn.includes(channel.type) && // `client.runIn[i] == 'dm'`
-                            !this.runIn.includes("all") // `client.runIn[i] == 'all'`
+                            if (!this.runIn.includes(channel.name) // `client.runIn[i] == msg.channel.name`
+                            && !this.runIn.includes(channel.type) // `client.runIn[i] == 'dm'`
+                            && !this.runIn.includes("all") // `client.runIn[i] == 'all'`
                             ) { return; }
                         }
                         // Pass `client`, `utils`, and other into `command` instance as property
@@ -194,10 +200,10 @@ export default class Client extends Discord.Client {
                     if (!monitor.enabled) { return; }
 
                     if (monitor.runIn.length !== 0) {
-                        if (monitor.runIn.includes((message.channel as Discord.TextChannel).name) ||
-                        monitor.runIn.includes(message.channel.type) ||
-                        monitor.runIn.includes(message.channel.id) ||
-                        monitor.runIn.includes("all")) {
+                        if (monitor.runIn.includes((message.channel as Discord.TextChannel).name)
+                        || monitor.runIn.includes(message.channel.type)
+                        || monitor.runIn.includes(message.channel.id)
+                        || monitor.runIn.includes("all")) {
                             this.setGoodies<Monitor>(monitor);
                             await monitor.run(message);
                         }
@@ -255,7 +261,7 @@ export default class Client extends Discord.Client {
         }
     }
 
-    public async guildMemberUpdateEvent(oldStateMember: Discord.GuildMember, newStateMember: Discord.GuildMember) {
+    public async guildMemberUpdateEvent(oldStateMember: Discord.GuildMember, newStateMember: Discord.GuildMember): Promise<void> {
         try {
             if (this.events.length === 0) { return; }
 
@@ -376,8 +382,8 @@ export default class Client extends Discord.Client {
             if (dirPath === "") { return instances; }
 
             const filePaths = fs.readdirSync(dirPath)
-                .filter((dirContent) => fs.statSync(path.join(dirPath, dirContent)).isFile() &&
-                path.extname(path.join(dirPath, dirContent)) === ".js")
+                .filter((dirContent) => fs.statSync(path.join(dirPath, dirContent)).isFile()
+                && path.extname(path.join(dirPath, dirContent)) === ".js")
                 .map((jsFile) => path.join(dirPath, jsFile));
 
             const Ctors: Record<string, any> = {};
@@ -401,7 +407,6 @@ export default class Client extends Discord.Client {
             runner.client = this;
             runner.utils = Utils;
             runner.helper = new Helper(this);
-            runner.helper.init();
             runner.log = new Logger(this);
             runner.log.setRunner(runner);
         } catch (error) {

@@ -8,14 +8,14 @@ export default class extends Command {
         super(runnerConfig.command.ping);
     }
 
-    public async run(message: Discord.Message, params: CommandParameters): Promise<void> {
+    public async run(message: Discord.Message, _params: CommandParameters): Promise<void> {
         try {
             // const infoMsg = await this.helper.getMessageById({
             //     messageId: MessageIds.PingCommandTemplate,
             //     categoryName: "Admin Channels",
             //     channelName: "dev-channel"
             // });
-            await message.channel.send('pong!');
+            await message.channel.send("pong!");
         } catch (error) {
             await message.channel.send(error.message);
             await this.log.error(error);

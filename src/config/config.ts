@@ -4,6 +4,6 @@ export default {
     cmdPrefix: ">",
     coco: {
         clientId: process.env.CLIENT_ID,
-        botToken: process.env.BOT_TOKEN
+        botToken: process.env.BOT_TOKEN,
     },
 };

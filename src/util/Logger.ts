@@ -44,8 +44,8 @@ export default class Logger {
             console.error(this.formatLogString(data), data);
 
             // TODO: Add a channel in configs for error logging purposes (if desired)
-            //const channel = this.client.configs.channels.errorLogs;
-            //await this.logToChannel(channel, data);
+            // const channel = this.client.configs.channels.errorLogs;
+            // await this.logToChannel(channel, data);
         } catch (error) {
             console.error(error);
         }
@@ -53,7 +53,8 @@ export default class Logger {
 
     public async error(...args: (string | Error)[]): Promise<void> {
         try {
-            await Promise.all(args.map((arg) => {
+            // eslint-disable-next-line array-callback-return
+            await Promise.all(args.map((arg): void => {
                 this.logError(arg);
             }));
         } catch (error) {

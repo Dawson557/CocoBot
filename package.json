@@ -9,13 +9,12 @@
   "scripts": {
     "start": "node dist/bot/app.js",
     "build": "rm -rf dist && npm run build-ts",
-    "build2": "npm run build-ts && npm run lint && npm run copy-static-assets",
+    "build2": "npm run build-ts && npm run lint",
     "test": "echo No test script",
     "watch-test": "npm run test -- --watchAll",
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
     "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
-    "copy-static-assets": "ts-node copyStaticAssets.ts",
     "debug": "npm run build && npm run watch-debug"
   },
   "repository": {
@@ -37,13 +36,13 @@
     "@types/node": "^12.7.2",
     "@types/shelljs": "^0.8.5",
     "@types/ws": "^6.0.3",
-    "@typescript-eslint/eslint-plugin": "^1.13.0",
+    "@typescript-eslint/eslint-plugin": "^2.18.0",
     "@typescript-eslint/parser": "^1.13.0",
     "concurrently": "^4.1.2",
-    "eslint": "^5.0.0",
-    "jest": "^24.9.0",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-typescript": "^6.3.1",
+    "eslint-plugin-import": "^2.20.0",
     "nodemon": "^1.19.1",
-    "shelljs": "^0.8.3",
     "ts-node": "^8.3.0",
     "typescript": "^3.6.2"
   }

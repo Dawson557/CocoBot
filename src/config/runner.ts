@@ -5,7 +5,7 @@ const ping: CommandConfig = {
     name: "ping",
     enabled: true,
     runIn: [
-        "dev-channel"
+        "dev-channel",
     ],
     description: "",
     aliases: [],
@@ -14,15 +14,15 @@ const ping: CommandConfig = {
     helpMessageInfo: {
         messageId: MessageIds.PingCommandTemplate,
         channelName: "dev-channel",
-        categoryName: "Admin Channels"
-    }
+        categoryName: "Admin Channels",
+    },
 };
 
 const join: CommandConfig = {
     name: "join",
     enabled: true,
     runIn: [
-        "dev-channel"
+        "dev-channel",
     ],
     description: "",
     aliases: [],
@@ -31,15 +31,15 @@ const join: CommandConfig = {
     helpMessageInfo: {
         messageId: MessageIds.JoinCommandTemplate,
         channelName: "dev-channel",
-        categoryName: "Admin Channels"
-    }
+        categoryName: "Admin Channels",
+    },
 };
 
 const leave: CommandConfig = {
     name: "leave",
     enabled: true,
     runIn: [
-        "dev-channel"
+        "dev-channel",
     ],
     description: "",
     aliases: [],
@@ -48,15 +48,15 @@ const leave: CommandConfig = {
     helpMessageInfo: {
         messageId: MessageIds.LeaveCommandTemplate,
         channelName: "dev-channel",
-        categoryName: "Admin Channels"
-    }
+        categoryName: "Admin Channels",
+    },
 };
 
 const ls: CommandConfig = {
     name: "ls",
     enabled: true,
     runIn: [
-        "dev-channel"
+        "dev-channel",
     ],
     description: "",
     aliases: ["list"],
@@ -65,17 +65,17 @@ const ls: CommandConfig = {
     helpMessageInfo: {
         messageId: MessageIds.LsCommandTemplate,
         channelName: "dev-channel",
-        categoryName: "Admin Channels"
-    }
+        categoryName: "Admin Channels",
+    },
 };
 
 const commandConfigs = {
     ping,
     join,
     leave,
-    ls
+    ls,
 };
 
 export default {
-    command: commandConfigs
+    command: commandConfigs,
 };

@@ -1,7 +1,5 @@
 import Discord from "discord.js";
-import { CourseCodePrefixes } from "../bot/commands/ls";
 import Client from "../lib/Client";
-import CommandParameters from "../lib/CommandParameters";
 import Logger from "./Logger";
 
 type IdResolvable = string | Discord.User | Discord.GuildMember | Discord.Role | Discord.Channel;
@@ -26,11 +24,9 @@ export default class Helper extends Discord.Guild {
         this.channelsByCategoryMap = this._createChannelsByCategoryMap();
     }
 
-    public async init(): Promise<void> {
-    }
-
-    private _createChannelsByCategoryMap() {
-        const channelsByCategoryMap = new Map();
+    // eslint-disable-next-line no-underscore-dangle
+    private _createChannelsByCategoryMap(): Map<string, Map<string, Discord.GuildChannel | undefined>> | undefined {
+        const channelsByCategoryMap: Map<string, Map<string, Discord.GuildChannel | undefined>> | undefined = new Map();
         if (this.guild === undefined) {
             throw new Error("Could not get channels since guild is undefined.");
         }
@@ -43,7 +39,7 @@ export default class Helper extends Discord.Guild {
             if (!channelsByCategoryMap.has(channel.parent.name)) {
                 channelsByCategoryMap.set(channel.parent.name, new Map());
             }
-            channelsByCategoryMap.get(channel.parent.name).set(channel.name, channel);
+            channelsByCategoryMap.get(channel.parent.name)?.set(channel.name, channel);
         }
 
         return channelsByCategoryMap;
@@ -151,28 +147,28 @@ export default class Helper extends Discord.Guild {
     public getMemberByIdOrNameOrTag(str: string): Discord.GuildMember | undefined {
         return this.guild
             ? this.guild.members
-                .find((guildMember) => guildMember.id === str ||
-                    guildMember.displayName === str ||
-                    guildMember.user.tag === str)
+                .find((guildMember) => guildMember.id === str
+                    || guildMember.displayName === str
+                    || guildMember.user.tag === str)
             : undefined;
     }
 
-    public async getMemberRoleById(memberIdResolvable: IdResolvable, roleIdResolvable: IdResolvable) {
+    public async getMemberRoleById(memberIdResolvable: IdResolvable, roleIdResolvable: IdResolvable): Promise<Discord.Role | undefined> {
         return (await this.getMemberById(Helper.resolveToId(memberIdResolvable))).roles.get(Helper.resolveToId(roleIdResolvable));
     }
 
-    public async getMemberRoles(memberIdResolvable: IdResolvable) {
+    public async getMemberRoles(memberIdResolvable: IdResolvable): Promise<Discord.GuildMemberRoleStore> {
         return (await this.getMemberById(Helper.resolveToId(memberIdResolvable))).roles;
     }
 
-    public async hasMemberRole(memberIdResolvable: IdResolvable, roleIdResolvable: IdResolvable) {
+    public async hasMemberRole(memberIdResolvable: IdResolvable, roleIdResolvable: IdResolvable): Promise<boolean> {
         return !!(await this.getMemberRoleById(memberIdResolvable, roleIdResolvable));
     }
 
     public async hasAnyMemberRole(
         memberIdResolvable: IdResolvable,
-        roleIdResolvables: IdResolvable[] | Record<string, IdResolvable>
-    ) {
+        roleIdResolvables: IdResolvable[] | Record<string, IdResolvable>,
+    ): Promise<boolean> {
         const roleIdResolvablesAsArray = roleIdResolvables instanceof Array
             ? roleIdResolvables
             : Object.values(roleIdResolvables);
@@ -184,7 +180,7 @@ export default class Helper extends Discord.Guild {
     public async getMessageById({
         messageId,
         channelName,
-        categoryName
+        categoryName,
     }: {
         messageId: string;
         channelName: string;
@@ -206,56 +202,20 @@ export default class Helper extends Discord.Guild {
         {
             messageId,
             channelName,
-            categoryName
+            categoryName,
         }: {
             messageId: string;
             channelName: string;
             categoryName: string;
-        }
-    ) {
+        },
+    ): Promise<void> {
         const message = await this.getMessageById({
             messageId,
             channelName,
-            categoryName
+            categoryName,
         });
 
         await channelToSend.send(message);
-    }
-
-    public async parseCourseRoleManagementCommand(message: Discord.Message, params: CommandParameters): Promise<{role: Discord.Role; channelDesiredName: string}> {
-        const allowedPrefixes = Object.values(CourseCodePrefixes);
-
-        const channelDesiredName = params.args[0].toLowerCase();
-
-        const isValidCmd = allowedPrefixes.some(e => channelDesiredName.startsWith(e));
-
-        if (!isValidCmd) { throw new Error("> Nice try, poncho! Only `comp-***`, `engr-***`, `soen-***` are allowed."); }
-
-        const roles = message.guild?.roles;
-
-        if (!roles) { throw new Error("> Sadly something went wrong when trying to get the server roles. @MODS 👑, help!"); } 
-
-        const role = roles
-            .filter(e => e.name.toLowerCase() === channelDesiredName)
-            .first();
-
-        if (!role) { throw new Error(`> Sadly no role was found with the name ${channelDesiredName}.`); }
-
-        const channels = message.guild?.channels;
-
-        if (!channels) { throw new Error("> Sadly something went wrong when trying to get the server channels. @MODS 👑, help!"); }
-        
-        const channel = channels
-            .filter(e => e !== undefined)
-            .filter(e => e.name.toLowerCase() === channelDesiredName)
-            .first();
-
-        if (!channel) { throw new Error(`> Sadly no channel was found with the name ${channelDesiredName}.`); }
-
-        return {
-            role,
-            channelDesiredName
-        };
     }
 }
 
