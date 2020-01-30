@@ -58,7 +58,7 @@ export default abstract class Utils {
         return Object.values(MiscChannels);
     }
 
-    public static async parseCourseRoleManagementCommand(message: Discord.Message, params: CommandParameters): Promise<{role: Discord.Role; desiredChannelName: string}> {
+    public static async parseChannelManagementCommand(message: Discord.Message, params: CommandParameters): Promise<{channel: Discord.GuildChannel}> {
         const couseChannelPrefixes = Utils.getCourseChannelPrefixes();
         const miscChannelNames = Utils.getMiscChannelNames();
 
@@ -67,16 +67,6 @@ export default abstract class Utils {
         const isValidCmd = couseChannelPrefixes.some((e) => desiredChannelName.startsWith(e)) || miscChannelNames.some((e) => e === desiredChannelName);
 
         if (!isValidCmd) { throw new Error("> :poop: Oopsies :poop: That is not a valid option."); }
-
-        const { roles } = message.guild || {};
-
-        if (!roles) { throw new Error("> Sadly something went wrong when trying to get the server roles. @MODS 👑, help!"); }
-
-        const role = roles
-            .filter((e) => e.name.toLowerCase() === desiredChannelName)
-            .first();
-
-        if (!role) { throw new Error(`> Sadly no role was found with the name ${desiredChannelName}.`); }
 
         const { channels } = message.guild || {};
 
@@ -90,8 +80,7 @@ export default abstract class Utils {
         if (!channel) { throw new Error(`> Sadly no channel was found with the name ${desiredChannelName}.`); }
 
         return {
-            role,
-            desiredChannelName,
+            channel,
         };
     }
 

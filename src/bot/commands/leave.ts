@@ -11,9 +11,16 @@ export default class extends Command {
 
     public async run(message: Discord.Message, params: CommandParameters): Promise<void> {
         try {
-            const { role, desiredChannelName } = await Utils.parseCourseRoleManagementCommand(message, params);
-            await message.member?.roles.remove(role);
-            await message.channel.send(`> Got it! Removed ${message.member}'s access to ${desiredChannelName}.`);
+            const { channel } = await Utils.parseChannelManagementCommand(message, params);
+            const { member } = message;
+
+            if (!member) { throw new Error("> Sadly something went wrong when trying to get the member. @MODS 👑, help!"); }
+
+            await channel.overwritePermissions({
+                permissionOverwrites: channel.permissionOverwrites.filter((e) => e.id !== member.id),
+            });
+
+            await message.channel.send(`> Got it! Removed ${message.member}'s access to ${channel.name}.`);
         } catch (error) {
             await message.channel.send(error.message);
             await this.log.error(error);
