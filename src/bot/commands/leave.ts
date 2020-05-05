@@ -14,13 +14,11 @@ export default class extends Command {
             const { channel } = await Utils.parseChannelManagementCommand(message, params);
             const { member } = message;
 
-            if (!member) { throw new Error("> Sadly something went wrong when trying to get the member. @MODS 👑, help!"); }
+            if (!member) { throw new Error("> :no_entry: Ah-ohh :no_entry: Sadly something went wrong when trying to get the member. @MODS 👑, help!"); }
 
-            await channel.overwritePermissions({
-                permissionOverwrites: channel.permissionOverwrites.filter((e) => e.id !== member.id),
-            });
+            await Utils.removeMemberFromChannel(channel, member);
 
-            await message.channel.send(`> Got it! Removed ${message.member}'s access to ${channel.name}.`);
+            await message.channel.send(`> :white_check_mark: Got it! Removed ${message.member}'s access to ${channel.name}.`);
         } catch (error) {
             await message.channel.send(error.message);
             await this.log.error(error);

@@ -69,11 +69,29 @@ const ls: CommandConfig = {
     },
 };
 
+const help: CommandConfig = {
+    name: "help",
+    enabled: true,
+    runIn: [
+        "dev-channel",
+    ],
+    description: "",
+    aliases: ["?"],
+    lowerCaseArgs: false,
+    template: "",
+    helpMessageInfo: {
+        messageId: MessageIds.LsCommandTemplate,
+        channelName: "dev-channel",
+        categoryName: "Admin Channels",
+    },
+};
+
 const commandConfigs = {
     ping,
     join,
     leave,
     ls,
+    help,
 };
 
 export default {
