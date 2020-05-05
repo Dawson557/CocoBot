@@ -11,9 +11,14 @@ export default class extends Command {
 
     public async run(message: Discord.Message, params: CommandParameters): Promise<void> {
         try {
-            const { role, desiredChannelName } = await Utils.parseCourseRoleManagementCommand(message, params);
-            await message.member?.roles.add(role);
-            await message.channel.send(`> Got it! Gave ${message.member} access to ${desiredChannelName}.`);
+            const { channel } = await Utils.parseChannelManagementCommand(message, params);
+            const { member } = message;
+
+            if (!member) { throw new Error("> :no_entry: Ah-ohh :no_entry: Sadly something went wrong when trying to get the member. @MODS 👑, help!"); }
+
+            await Utils.addMemberToChannel(channel, member);
+
+            await message.channel.send(`> :white_check_mark: Got it! Gave ${message.member} access to ${channel.name}.`);
         } catch (error) {
             await message.channel.send(error.message);
             await this.log.error(error);

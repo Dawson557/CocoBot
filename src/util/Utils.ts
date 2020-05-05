@@ -3,11 +3,21 @@ import CourseCodePrefixes from "../config/CourseCodePrefixes";
 import MiscChannels from "../config/MiscChannels";
 import CommandParameters from "../lib/CommandParameters";
 
-export declare module util2 {
-    function isNotNullOrUndefined(object: any): object is null | undefined;
-}
-
 export default abstract class Utils {
+    public static addMemberToChannel(channel: Discord.GuildChannel, member: Discord.GuildMember): Promise<Discord.GuildChannel> {
+        return channel.updateOverwrite(member, {
+            READ_MESSAGE_HISTORY: true,
+            SEND_MESSAGES: true,
+            VIEW_CHANNEL: true,
+        });
+    }
+
+    public static removeMemberFromChannel(channel: Discord.GuildChannel, member: Discord.GuildMember): Promise<Discord.GuildChannel> {
+        return channel.overwritePermissions({
+            permissionOverwrites: channel.permissionOverwrites.filter((e) => e.id !== member.id),
+        });
+    }
+
     public static randomColor(): number {
         return Math.floor(Math.random() * 16777214) + 1;
     }
@@ -58,25 +68,27 @@ export default abstract class Utils {
         return Object.values(MiscChannels);
     }
 
-    public static async parseCourseRoleManagementCommand(message: Discord.Message, params: CommandParameters): Promise<{role: Discord.Role; desiredChannelName: string}> {
-        const couseChannelPrefixes = Utils.getCourseChannelPrefixes();
+    public static async checkMemberHasAgreedToRules(member: Discord.GuildMember): Promise<void> {
+        const { roles } = member;
+        const memberRoles = roles.array().filter((role) => role.name === "Members");
+        if (memberRoles.length === 0) {
+            throw new Error("> :poop: Oopsies :poop: Seems like you haven't agreed to the rules yet. Go to #rules and hit the :thumbsup: emoji after reading the rules first.");
+        }
+    }
+
+    public static async parseChannelManagementCommand(message: Discord.Message, params: CommandParameters): Promise<{channel: Discord.GuildChannel}> {
+        if (message.member) {
+            await this.checkMemberHasAgreedToRules(message.member);
+        }
+
+        const courseChannelPrefixes = Utils.getCourseChannelPrefixes();
         const miscChannelNames = Utils.getMiscChannelNames();
 
         const desiredChannelName = params.args[0].toLowerCase();
 
-        const isValidCmd = couseChannelPrefixes.some((e) => desiredChannelName.startsWith(e)) || miscChannelNames.some((e) => e === desiredChannelName);
+        const isValidCmd = courseChannelPrefixes.some((e) => desiredChannelName.startsWith(e)) || miscChannelNames.some((e) => e === desiredChannelName);
 
         if (!isValidCmd) { throw new Error("> :poop: Oopsies :poop: That is not a valid option."); }
-
-        const { roles } = message.guild || {};
-
-        if (!roles) { throw new Error("> Sadly something went wrong when trying to get the server roles. @MODS 👑, help!"); }
-
-        const role = roles
-            .filter((e) => e.name.toLowerCase() === desiredChannelName)
-            .first();
-
-        if (!role) { throw new Error(`> Sadly no role was found with the name ${desiredChannelName}.`); }
 
         const { channels } = message.guild || {};
 
@@ -87,11 +99,10 @@ export default abstract class Utils {
             .filter((e) => e.name.toLowerCase() === desiredChannelName)
             .first();
 
-        if (!channel) { throw new Error(`> Sadly no channel was found with the name ${desiredChannelName}.`); }
+        if (!channel) { throw new Error(`> :poop: Oopsies :poop: Sadly no channel was found with the name ${desiredChannelName}. Tag a mod \`@mod\` if you would like to have it created.`); }
 
         return {
-            role,
-            desiredChannelName,
+            channel,
         };
     }
 
