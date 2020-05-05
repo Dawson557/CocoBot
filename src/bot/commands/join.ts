@@ -11,6 +11,7 @@ export default class extends Command {
 
     public async run(message: Discord.Message, params: CommandParameters): Promise<void> {
         try {
+            this.helper.checkCommandUsedInAppropriateChannel(message.channel);
             const { channel } = await Utils.parseChannelManagementCommand(message, params);
             const { member } = message;
 
@@ -22,7 +23,7 @@ export default class extends Command {
         } catch (error) {
             await message.channel.send(error.message);
             await this.log.error(error);
-            await this.help(message.channel as Discord.TextChannel);
+            if (Utils.isCommandUsedInAppropriateChannel(message.channel)) { await this.help(message.channel as Discord.TextChannel); }
         }
     }
 }

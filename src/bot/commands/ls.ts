@@ -11,11 +11,12 @@ export default class extends Command {
 
     public async run(message: Discord.Message, _params: CommandParameters): Promise<void> {
         try {
+            this.helper.checkCommandUsedInAppropriateChannel(message.channel);
             await message.channel.send(Utils.displayAvailableChannels(message.guild));
         } catch (error) {
             await message.channel.send(error.message);
             await this.log.error(error);
-            await this.help(message.channel as Discord.TextChannel);
+            if (Utils.isCommandUsedInAppropriateChannel(message.channel)) { await this.help(message.channel as Discord.TextChannel); }
         }
     }
 }

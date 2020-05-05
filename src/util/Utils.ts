@@ -1,9 +1,14 @@
 import Discord from "discord.js";
+import ChannelIds from "../config/ChannelIds";
 import CourseCodePrefixes from "../config/CourseCodePrefixes";
 import MiscChannels from "../config/MiscChannels";
 import CommandParameters from "../lib/CommandParameters";
 
 export default abstract class Utils {
+    public static isCommandUsedInAppropriateChannel(channel: Discord.TextChannel | Discord.DMChannel): boolean {
+        return channel && Object.values(ChannelIds).map((e) => e as string).includes(channel.id);
+    }
+
     public static addMemberToChannel(channel: Discord.GuildChannel, member: Discord.GuildMember): Promise<Discord.GuildChannel> {
         return channel.updateOverwrite(member, {
             READ_MESSAGE_HISTORY: true,

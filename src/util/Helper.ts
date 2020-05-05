@@ -1,6 +1,8 @@
 import Discord from "discord.js";
+import ChannelIds from "../config/ChannelIds";
 import Client from "../lib/Client";
 import Logger from "./Logger";
+import Utils from "./Utils";
 
 type IdResolvable = string | Discord.User | Discord.GuildMember | Discord.Role | Discord.Channel;
 
@@ -216,6 +218,13 @@ export default class Helper extends Discord.Guild {
         });
 
         await channelToSend.send(message);
+    }
+
+    public checkCommandUsedInAppropriateChannel(channel: Discord.TextChannel | Discord.DMChannel): void {
+        if (!Utils.isCommandUsedInAppropriateChannel(channel)) {
+            const botChannel = this.getChannelById(ChannelIds.BotRequestChannel);
+            throw new Error(`Use me in ${botChannel} you shit head :poop:`);
+        }
     }
 }
 

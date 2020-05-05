@@ -4,9 +4,7 @@ import MessageIds from "./MessageIds";
 const ping: CommandConfig = {
     name: "ping",
     enabled: true,
-    runIn: [
-        "dev-channel",
-    ],
+    runIn: ["all"],
     description: "",
     aliases: [],
     lowerCaseArgs: false,
@@ -21,9 +19,7 @@ const ping: CommandConfig = {
 const join: CommandConfig = {
     name: "join",
     enabled: true,
-    runIn: [
-        "dev-channel",
-    ],
+    runIn: ["all"],
     description: "",
     aliases: [],
     lowerCaseArgs: false,
@@ -38,9 +34,7 @@ const join: CommandConfig = {
 const leave: CommandConfig = {
     name: "leave",
     enabled: true,
-    runIn: [
-        "dev-channel",
-    ],
+    runIn: ["all"],
     description: "",
     aliases: [],
     lowerCaseArgs: false,
@@ -55,9 +49,7 @@ const leave: CommandConfig = {
 const ls: CommandConfig = {
     name: "ls",
     enabled: true,
-    runIn: [
-        "dev-channel",
-    ],
+    runIn: ["all"],
     description: "",
     aliases: ["list"],
     lowerCaseArgs: false,
@@ -72,9 +64,7 @@ const ls: CommandConfig = {
 const help: CommandConfig = {
     name: "help",
     enabled: true,
-    runIn: [
-        "dev-channel",
-    ],
+    runIn: ["all"],
     description: "",
     aliases: ["?"],
     lowerCaseArgs: false,
