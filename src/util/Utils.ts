@@ -185,7 +185,7 @@ export default abstract class Utils {
         return Utils.joinKeys(CourseCodePrefixes, ", ", Utils.lowerCaseDashTransform);
     }
 
-    public static displayCourseChannels(guild: Discord.Guild | null): string {
+    public static getFormattedCourseChannels(guild: Discord.Guild | null): string[] {
         const courseChannels = Utils.getCourseChannels(guild);
 
         const courseChannelNames: string[] = courseChannels.map((channel) => channel.name);
@@ -201,8 +201,7 @@ export default abstract class Utils {
 
         const formattedCourseChannelsText = Array.from(channelNamesGroupedByCode.entries())
             .sort()
-            .map(([courseCodePrefix, channelNames]: [string, string[]]): string => `> **${courseCodePrefix.toUpperCase()}**: ${channelNames.sort().map(extractNumberAndUpperCase).join(", ")}`)
-            .reduce((text: string, courseCodePrefixText: string): string => `${text}${text === "" ? "" : "\n"}${courseCodePrefixText}`, "");
+            .map(([courseCodePrefix, channelNames]: [string, string[]]): string => `> **${courseCodePrefix.toUpperCase()}**: ${channelNames.sort().map(extractNumberAndUpperCase).join(", ")}`);
 
         return formattedCourseChannelsText;
     }
@@ -213,10 +212,37 @@ export default abstract class Utils {
         return `> **OTHER**: ${miscChannels.map((e) => e.name).join(", ")}`;
     }
 
-    public static displayAvailableChannels(guild: Discord.Guild | null): string {
-        const formattedCourseChannelsText = Utils.displayCourseChannels(guild);
-        const formattedMiscChannelsText = Utils.displayMiscChannels(guild);
+    public static displayAvailableChannels(guild: Discord.Guild | null): string[] {
+        const formattedCourseChannels = ["> **The possible course channels to join are:**\n",
+            ...Utils.getFormattedCourseChannels(guild),
+            Utils.displayMiscChannels(guild)];
+        const availableChannelMultiPartMessages = Utils.partitionAtIndices(formattedCourseChannels, Utils.getPartitionIndices(formattedCourseChannels, 1500));
 
-        return `> **The possible course channels to join are:**\n${formattedCourseChannelsText}\n${formattedMiscChannelsText}`;
+        return availableChannelMultiPartMessages.map((e) => e.join("\n"));
+    }
+
+    public static getPartitionIndices(elements: string[], charLimit: number): number[] {
+        let count = 0;
+        return elements.reduce((indices: number[], element, index) => {
+            count += element.length;
+            if (count >= charLimit) {
+                count = element.length;
+                return [...indices, index];
+            }
+
+            return indices;
+        }, []);
+    }
+
+    private static partitionAtIndices<T>(elements: T[], indices: number[]): T[][] {
+        const partitions: T[][] = [];
+        let previousPartitionIndex = 0;
+        for (const partitionIndex of indices) {
+            partitions.push(elements.slice(previousPartitionIndex, partitionIndex));
+            previousPartitionIndex = partitionIndex;
+        }
+        partitions.push(elements.slice(previousPartitionIndex, elements.length));
+
+        return partitions;
     }
 }

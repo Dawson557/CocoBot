@@ -12,7 +12,11 @@ export default class extends Command {
     public async run(message: Discord.Message, _params: CommandParameters): Promise<void> {
         try {
             this.helper.checkCommandUsedInAppropriateChannel(message.channel);
-            await message.channel.send(Utils.displayAvailableChannels(message.guild));
+            const availableChannelsMultiPartMessages = Utils.displayAvailableChannels(message.guild);
+            for (const availableChannelsMultiPartMessage of availableChannelsMultiPartMessages) {
+                // eslint-disable-next-line no-await-in-loop
+                await message.channel.send(availableChannelsMultiPartMessage);
+            }
         } catch (error) {
             await message.channel.send(error.message);
             await this.log.error(error);
