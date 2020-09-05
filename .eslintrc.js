@@ -2,39 +2,43 @@ module.exports = {
     root: true,
     parser: "@typescript-eslint/parser",
     plugins: [
-      "@typescript-eslint",
+        "@typescript-eslint",
     ],
     extends: [
         "airbnb-typescript/base",
     ],
+    parserOptions: {
+        project: "./tsconfig.json",
+        createDefaultProgram: true,
+    },
     rules: {
         "import/no-cycle": [
-            3,
-            { maxDepth: 1 }
+            1,
+            { maxDepth: 1 },
         ],
         "max-len": [
             "warn",
-            200
+            200,
         ],
         "no-restricted-syntax": ["error", "ForInStatement", "LabeledStatement", "WithStatement"],
         "@typescript-eslint/indent": [
             "error",
-            4
+            4,
         ],
         "@typescript-eslint/no-unused-vars": [
-            "error", 
-            { "argsIgnorePattern": "^_" }
+            "error",
+            { argsIgnorePattern: "^_" },
         ],
         "@typescript-eslint/explicit-function-return-type": [
             "warn",
             {
                 allowExpressions: true,
-                allowTypedFunctionExpressions: true
-            }
+                allowTypedFunctionExpressions: true,
+            },
         ],
         "@typescript-eslint/quotes": [
             "error",
-            "double"
-        ]
-    }
+            "double",
+        ],
+    },
 };
