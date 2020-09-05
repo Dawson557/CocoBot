@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import Discord from "discord.js";
 import ChannelIds from "../config/ChannelIds";
 import Client from "../lib/Client";

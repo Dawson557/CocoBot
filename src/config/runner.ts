@@ -70,7 +70,37 @@ const help: CommandConfig = {
     lowerCaseArgs: false,
     template: "",
     helpMessageInfo: {
-        messageId: MessageIds.LsCommandTemplate,
+        messageId: MessageIds.HelpCommandMessage,
+        channelName: "dev-channel",
+        categoryName: "Admin Channels",
+    },
+};
+
+const stats: CommandConfig = {
+    name: "stats",
+    enabled: true,
+    runIn: ["admin", "dev-channel"],
+    description: "",
+    aliases: ["stat"],
+    lowerCaseArgs: false,
+    template: "",
+    helpMessageInfo: {
+        messageId: MessageIds.StatsCommandTemplate,
+        channelName: "dev-channel",
+        categoryName: "Admin Channels",
+    },
+};
+
+const echo: CommandConfig = {
+    name: "echo",
+    enabled: true,
+    runIn: ["admin", "dev-channel"],
+    description: "",
+    aliases: [],
+    lowerCaseArgs: false,
+    template: "",
+    helpMessageInfo: {
+        messageId: MessageIds.EchoCommandTemplate,
         channelName: "dev-channel",
         categoryName: "Admin Channels",
     },
@@ -82,6 +112,8 @@ const commandConfigs = {
     leave,
     ls,
     help,
+    stats,
+    echo,
 };
 
 export default {

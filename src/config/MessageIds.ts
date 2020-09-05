@@ -5,7 +5,9 @@ enum MessageIds {
     JoinCommandTemplate = "751496126569644063",
     LeaveCommandTemplate = "751496126569644063",
     LsCommandTemplate = "751496126569644063",
-    HelpCommandMessage = "707062801340039218"
+    HelpCommandMessage = "707062801340039218",
+    StatsCommandTemplate = "751683180582404106",
+    EchoCommandTemplate = "751688351559581747",
 }
 
 export default MessageIds;
