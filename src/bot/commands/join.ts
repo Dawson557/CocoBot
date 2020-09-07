@@ -20,6 +20,8 @@ export default class extends Command {
             await Utils.addMemberToChannel(channel, member);
 
             await message.channel.send(`> :white_check_mark: Got it! Gave ${message.member} access to ${channel.name}.`);
+
+            await (channel as Discord.TextChannel)?.send(`*${message.member} joined the chat.*`);
         } catch (error) {
             await message.channel.send(error.message);
             await this.log.error(error);
