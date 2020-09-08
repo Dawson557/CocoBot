@@ -23,6 +23,10 @@ export default abstract class Utils {
         });
     }
 
+    public static isMemberAlreadyInChannel(channel: Discord.GuildChannel, member: Discord.GuildMember): boolean {
+        return channel.permissionOverwrites.array().first((e) => e.id === member.id) !== undefined;
+    }
+
     public static randomColor(): number {
         return Math.floor(Math.random() * 16777214) + 1;
     }
