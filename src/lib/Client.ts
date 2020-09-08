@@ -10,6 +10,7 @@
 import Discord, { Collection, Snowflake } from "discord.js";
 import fs from "fs";
 import path from "path";
+import "typescript-extensions";
 import config from "../config/config";
 import Helper from "../util/Helper";
 import Logger from "../util/Logger";

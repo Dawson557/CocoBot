@@ -77,7 +77,8 @@ export default abstract class Utils {
         const { roles } = member;
         const memberRoles = roles.array().filter((role) => role.name === "Members");
         if (memberRoles.length === 0) {
-            throw new Error("> :poop: Oopsies :poop: Seems like you haven't agreed to the rules yet. Go to #rules and hit the :thumbsup: emoji after reading the rules first.");
+            const rulesChannel = Utils.getChannels(member.guild).first((channel) => channel.id === ChannelIds.RulesChannel);
+            throw new Error(`> :poop: Oopsies :poop: Seems like you haven't agreed to the rules yet. Go to ${rulesChannel} and hit the :thumbsup: emoji after reading the rules first.`);
         }
     }
 
