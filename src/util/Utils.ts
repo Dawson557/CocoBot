@@ -17,10 +17,8 @@ export default abstract class Utils {
         });
     }
 
-    public static removeMemberFromChannel(channel: Discord.GuildChannel, member: Discord.GuildMember): Promise<Discord.GuildChannel> {
-        return channel.overwritePermissions({
-            permissionOverwrites: channel.permissionOverwrites.filter((e) => e.id !== member.id),
-        });
+    public static removeMemberFromChannel(channel: Discord.GuildChannel, member: Discord.GuildMember): Promise<Discord.PermissionOverwrites> | undefined {
+        return channel.permissionOverwrites.get(member.id)?.delete();
     }
 
     public static isMemberAlreadyInChannel(channel: Discord.GuildChannel, member: Discord.GuildMember): boolean {
