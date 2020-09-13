@@ -14,7 +14,6 @@ export default class extends Command {
        
             this.helper.checkCommandUsedInAppropriateChannel(message.channel);
             
-            console.log(params)
             const [period, periodLen] = params.args;
 
             let dateToReturn = new Date();
@@ -33,7 +32,6 @@ export default class extends Command {
             }
 
             const count = message.guild?.members.filter(compare)
-            console.log(count?.size)
             
             message.channel.send(`${count?.size} New members in last ${periodLen} ${period}`)
 
