@@ -14,14 +14,18 @@ export default class extends Command {
        
             this.helper.checkCommandUsedInAppropriateChannel(message.channel);
             
-            const [period, periodLen] = params.args;
+            let [period, periodLen] = params.args;
+
+            if(params.args.length === 0 || period === undefined){
+                period = "days";
+                periodLen = "7";
+            }
 
             let dateToReturn = new Date();
 
             if(period === "days"){
                 dateToReturn.setDate(dateToReturn.getDate() - Number(periodLen))
             }
-
 
             const compare = (member : GuildMember) => {
                 if(member?.joinedAt?.toTimeString()){
