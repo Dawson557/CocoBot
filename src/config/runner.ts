@@ -124,7 +124,7 @@ const sort: CommandConfig = {
 const count: CommandConfig = {
     name: "count",
     enabled: true,
-    runIn: ["admin", "dev-channel"],
+    runIn: ["all"],
     description: "",
     aliases: [],
     lowerCaseArgs: false,
