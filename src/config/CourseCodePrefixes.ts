@@ -15,7 +15,8 @@ enum CourseCodePrefixes {
     INDU,
     MECH,
     PHYS,
-    SOEN
+    SOEN,
+    MIAE
 }
 
 export default CourseCodePrefixes;
