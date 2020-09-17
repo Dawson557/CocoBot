@@ -3,7 +3,7 @@ enum ChannelIds {
     DevChannel = "671414842078527498",
     BotRequestChannel = "308647431065567232",
     TestServerDevChannel = "671419000366039070",
-    RulesChannel = "402691678814601216"
+    RulesChannel = "753723608789942403"
 }
 
 export default ChannelIds;
