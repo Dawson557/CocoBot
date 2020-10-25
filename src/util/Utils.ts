@@ -9,6 +9,19 @@ export default abstract class Utils {
         return channel && Object.values(ChannelIds).map((e) => e as string).includes(channel.id);
     }
 
+    public static validateArguments(actualArguments: string[], ...expectedArgumentPredicates: ((arg: string) => boolean)[]): void {
+        for (let i = 0; i < expectedArgumentPredicates.length; i += 1) {
+            const expectedArgumentPredicate = expectedArgumentPredicates[i];
+            const actualArgument = actualArguments[i];
+            if (!actualArgument) {
+                throw new Error(`Missing argument, argument at position ${i} must satisfy ${expectedArgumentPredicate},`);
+            }
+            if (!actualArgument || !expectedArgumentPredicate(actualArgument)) {
+                throw new Error(`Bad argument, argument \`${actualArgument}\` must satisfy ${expectedArgumentPredicate}, but it did not.`);
+            }
+        }
+    }
+
     public static addMemberToChannel(channel: Discord.GuildChannel, member: Discord.GuildMember): Promise<Discord.GuildChannel> {
         return channel.updateOverwrite(member, {
             READ_MESSAGE_HISTORY: true,

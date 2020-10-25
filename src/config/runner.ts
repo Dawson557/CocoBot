@@ -124,13 +124,13 @@ const sort: CommandConfig = {
 const count: CommandConfig = {
     name: "count",
     enabled: true,
-    runIn: ["all"],
+    runIn: ["admin", "dev-channel"],
     description: "",
     aliases: [],
     lowerCaseArgs: false,
     template: "",
     helpMessageInfo: {
-        messageId: MessageIds.EchoCommandTemplate,
+        messageId: MessageIds.CountCommandTemplate,
         channelName: "dev-channel",
         categoryName: "Admin Channels",
     },

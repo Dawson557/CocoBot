@@ -11,34 +11,38 @@ export default class extends Command {
 
     public async run(message: Discord.Message, params: CommandParameters): Promise<void> {
         try {
-       
             this.helper.checkCommandUsedInAppropriateChannel(message.channel);
-            
-            let [period, periodLen] = params.args;
 
-            if(params.args.length === 0 || period === undefined){
-                period = "days";
-                periodLen = "7";
+            const defaultPeriod = "days";
+            const defaultPeriodLength = "7";
+
+            let [period, periodLength] = params.args;
+
+            if (params.args.isEmpty()) {
+                period = defaultPeriod;
+                periodLength = defaultPeriodLength;
+            } else {
+                Utils.validateArguments(params.args,
+                    (arg: string) => arg.toLowerCase() === defaultPeriod,
+                    (arg: string) => !!Number(arg));
             }
 
-            let dateToReturn = new Date();
+            const startDateSinceNewMembers = new Date();
 
-            if(period === "days"){
-                dateToReturn.setDate(dateToReturn.getDate() - Number(periodLen))
+            if (period === defaultPeriod) {
+                startDateSinceNewMembers.setDate(startDateSinceNewMembers.getDate() - Number(periodLength));
             }
 
-            const compare = (member : GuildMember) => {
-                if(member?.joinedAt?.toTimeString()){
-                    return member.joinedAt > dateToReturn
-                }else{
-                    return false
+            const compare = (member : GuildMember): boolean => {
+                if (member?.joinedAt?.toTimeString()) {
+                    return member.joinedAt > startDateSinceNewMembers;
                 }
-            }
+                return false;
+            };
 
-            const count = message.guild?.members.filter(compare)
-            
-            message.channel.send(`${count?.size} New members in last ${periodLen} ${period}`)
+            const count = message.guild?.members.filter(compare);
 
+            message.channel.send(`${count?.size} new members in last ${periodLength} ${period}`);
         } catch (error) {
             await message.channel.send(error.message);
             await this.log.error(error);
@@ -46,4 +50,3 @@ export default class extends Command {
         }
     }
 }
-
