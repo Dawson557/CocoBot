@@ -8,6 +8,7 @@ enum MessageIds {
     HelpCommandMessage = "707062801340039218",
     StatsCommandTemplate = "751683180582404106",
     EchoCommandTemplate = "751688351559581747",
+    SortCommandTemplate = "769743016683896832"
 }
 
 export default MessageIds;

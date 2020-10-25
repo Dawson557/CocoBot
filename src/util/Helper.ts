@@ -1,5 +1,5 @@
 /* eslint-disable import/no-cycle */
-import Discord from "discord.js";
+import Discord, { GuildChannel } from "discord.js";
 import ChannelIds from "../config/ChannelIds";
 import Client from "../lib/Client";
 import Logger from "./Logger";
@@ -83,6 +83,18 @@ export default class Helper extends Discord.Guild {
             throw new Error("`message.channel instanceof Discord.TextChannel === false`");
         }
         return channel;
+    }
+
+    public getChannelsForCategoryId(categoryId: string): GuildChannel[] {
+        const channels = this.guild?.channels.array() ?? [];
+        return channels.filter((channel) => channel.parent?.id === categoryId);
+    }
+
+    public getCategoryIdForName(categoryName: string): string | undefined {
+        const channels = this.guild?.channels.array() ?? [];
+        return channels
+            .filter((channel) => channel.parent?.name.toLowerCase() === categoryName.toLowerCase())
+            .first()?.parent?.id;
     }
 
     public getRoleById(roleId: string): Discord.Role | undefined {

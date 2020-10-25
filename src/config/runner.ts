@@ -106,6 +106,21 @@ const echo: CommandConfig = {
     },
 };
 
+const sort: CommandConfig = {
+    name: "sort",
+    enabled: true,
+    runIn: ["admin", "dev-channel"],
+    description: "",
+    aliases: [],
+    lowerCaseArgs: false,
+    template: "",
+    helpMessageInfo: {
+        messageId: MessageIds.SortCommandTemplate,
+        channelName: "dev-channel",
+        categoryName: "Admin Channels",
+    },
+};
+
 const commandConfigs = {
     ping,
     join,
@@ -114,6 +129,7 @@ const commandConfigs = {
     help,
     stats,
     echo,
+    sort,
 };
 
 export default {
