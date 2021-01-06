@@ -1,5 +1,5 @@
 enum MiscChannels {
-    COOP = "co-op"
+    // COOP = "co-op"
 }
 
 export default MiscChannels;

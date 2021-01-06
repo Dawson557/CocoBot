@@ -1,6 +1,7 @@
 import Discord from "discord.js";
-
+// TODO delete
 enum ConfigMessages {
+    // TODO replace with env
     PublicRoles = "635138806294642701"
 }
 

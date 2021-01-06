@@ -1,12 +1,12 @@
 import Discord from "discord.js";
-import ChannelIds from "../config/ChannelIds";
 import CourseCodePrefixes from "../config/CourseCodePrefixes";
 import MiscChannels from "../config/MiscChannels";
 import CommandParameters from "../lib/CommandParameters";
+import config from "../config/config";
 
 export default abstract class Utils {
     public static isCommandUsedInAppropriateChannel(channel: Discord.TextChannel | Discord.DMChannel): boolean {
-        return channel && Object.values(ChannelIds).map((e) => e as string).includes(channel.id);
+        return channel && Object.values(config.channelIds).map((e) => e as string).includes(channel.id);
     }
 
     public static validateArguments(actualArguments: string[], ...expectedArgumentPredicates: ((arg: string) => boolean)[]): void {
@@ -92,7 +92,7 @@ export default abstract class Utils {
         const { roles } = member;
         const memberRoles = roles.array().filter((role) => role.name === "Members");
         if (memberRoles.length === 0) {
-            const rulesChannel = Utils.getChannels(member.guild).first((channel) => channel.id === ChannelIds.RulesChannel);
+            const rulesChannel = Utils.getChannels(member.guild).first((channel) => channel.id === config.channelIds.RulesChannel);
             throw new Error(`> :poop: Oopsies :poop: Seems like you haven't agreed to the rules yet. Go to ${rulesChannel} and hit the :thumbsup: emoji after reading the rules first.`);
         }
     }
@@ -113,6 +113,7 @@ export default abstract class Utils {
 
         const { channels } = message.guild || {};
 
+        // TODO replace with mod ID
         if (!channels) { throw new Error("> Sadly something went wrong when trying to get the server channels. @MODS 👑, help!"); }
 
         const channel = channels
@@ -166,6 +167,7 @@ export default abstract class Utils {
     public static getChannels(guild: Discord.Guild | null): Discord.GuildChannel[] {
         const { channels } = guild || {};
 
+        // TODO replace with MOD id
         if (!channels) { throw new Error("> Sadly something went wrong when trying to get the server channels. @MODS 👑, help!"); }
 
         return channels.array();

@@ -1,9 +1,9 @@
 /* eslint-disable import/no-cycle */
 import Discord, { GuildChannel } from "discord.js";
-import ChannelIds from "../config/ChannelIds";
 import Client from "../lib/Client";
 import Logger from "./Logger";
 import Utils from "./Utils";
+import config from "../config/config";
 
 type IdResolvable = string | Discord.User | Discord.GuildMember | Discord.Role | Discord.Channel;
 
@@ -235,7 +235,7 @@ export default class Helper extends Discord.Guild {
 
     public checkCommandUsedInAppropriateChannel(channel: Discord.TextChannel | Discord.DMChannel): void {
         if (!Utils.isCommandUsedInAppropriateChannel(channel)) {
-            const botChannel = this.getChannelById(ChannelIds.BotRequestChannel);
+            const botChannel = this.getChannelById(config.channelIds.BotRequestChannel);
             throw new Error(`Use me in ${botChannel} you shit head :poop:`);
         }
     }
