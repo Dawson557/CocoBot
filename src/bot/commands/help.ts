@@ -1,5 +1,5 @@
 import Discord from "discord.js";
-import MessageIds from "../../config/MessageIds";
+import config from "../../config/config";
 import runnerConfig from "../../config/runner";
 import Command from "../../lib/Command";
 import CommandParameters from "../../lib/CommandParameters";
@@ -14,7 +14,7 @@ export default class extends Command {
         try {
             this.helper.checkCommandUsedInAppropriateChannel(message.channel);
             const helpMsg = await this.helper.getMessageById({
-                messageId: MessageIds.HelpCommandMessage,
+                messageId: config.MessageIds.HelpCommandMessage,
                 categoryName: "Admin Channels",
                 channelName: "dev-channel",
             });

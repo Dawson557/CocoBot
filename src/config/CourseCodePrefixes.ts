@@ -1,4 +1,5 @@
 enum CourseCodePrefixes {
+    // Undergrad course codes
     AERO,
     BCEE,
     BIOL,
@@ -16,7 +17,10 @@ enum CourseCodePrefixes {
     MECH,
     PHYS,
     SOEN,
-    MIAE
+    MIAE,
+    // Gradute server course codes
+    CHME,
+    INSE
 }
 
 export default CourseCodePrefixes;

@@ -12,6 +12,7 @@ module.exports = {
         createDefaultProgram: true,
     },
     rules: {
+        "linebreak-style": ["error", "unix"], // changes the file to LF in unix
         "import/no-cycle": [
             1,
             { maxDepth: 1 },

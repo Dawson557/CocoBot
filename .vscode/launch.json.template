@@ -16,10 +16,24 @@
             "outFiles": [
                 "${workspaceFolder}/dist/**/*.js"
             ],
-            "env": {
+                "env": {
                 "NODE_ENV": "development",
-                "CLIENT_ID": "671406438249398311",
-                "BOT_TOKEN": "{INSER BOT TOKEN HERE}",
+                "CLIENT_ID": "",
+                "BOT_TOKEN": "",
+                "GUILD_ID": "",
+                "ADMIN_CHANNEL": "",
+                "DEV_CHANNEL": "",
+                "BOT_REQUESTS_CHANNEL": "",
+                "RULES_CHANNEL": "",
+                "PING_COMMAND_TEMPLATE": "",
+                "JOIN_COMMAND_TEMPLATE": "",
+                "LEAVE_COMMAND_TEMPLATE": "",
+                "LS_COMMAND_TEMPLATE": "",
+                "HELP_COMMAND_TEMPLATE": "",
+                "STATS_COMMAND_TEMPLATE": "",
+                "ECHO_COMMAND_TEMPLATE": "",
+                "SORT_COMMAND_TEMPLATE": "",
+                "COUNT_COMMAND_TEMPLATE": ""
             }
         },
         {
