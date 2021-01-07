@@ -23,4 +23,7 @@ export default {
         SortCommandTemplate: process.env.SORT_COMMAND_TEMPLATE as string,
         CountCommandTemplate: process.env.COUNT_COMMAND_TEMPLATE as string,
     },
+    MiscChannels: {
+        // empty for now, used to be coop ids
+    },
 };

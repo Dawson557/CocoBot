@@ -1,8 +1,7 @@
 import Discord from "discord.js";
-import CourseCodePrefixes from "../config/CourseCodePrefixes";
-import MiscChannels from "../config/MiscChannels";
-import CommandParameters from "../lib/CommandParameters";
 import config from "../config/config";
+import CourseCodePrefixes from "../config/CourseCodePrefixes";
+import CommandParameters from "../lib/CommandParameters";
 
 export default abstract class Utils {
     public static isCommandUsedInAppropriateChannel(channel: Discord.TextChannel | Discord.DMChannel): boolean {
@@ -85,7 +84,7 @@ export default abstract class Utils {
     }
 
     public static getMiscChannelNames(): string[] {
-        return Object.values(MiscChannels);
+        return Object.values(config.MiscChannels);
     }
 
     public static async checkMemberHasAgreedToRules(member: Discord.GuildMember): Promise<void> {
@@ -97,7 +96,7 @@ export default abstract class Utils {
         }
     }
 
-    public static async parseChannelManagementCommand(message: Discord.Message, params: CommandParameters): Promise<{channel: Discord.GuildChannel}> {
+    public static async parseChannelManagementCommand(message: Discord.Message, params: CommandParameters): Promise<{ channel: Discord.GuildChannel }> {
         if (message.member) {
             await this.checkMemberHasAgreedToRules(message.member);
         }
@@ -188,7 +187,7 @@ export default abstract class Utils {
     public static getMiscChannels(guild: Discord.Guild | null): Discord.GuildChannel[] {
         const channels = Utils.getChannels(guild);
 
-        const miscChannelNames = Object.values(MiscChannels).map((e) => e.toLowerCase());
+        const miscChannelNames = Object.values(config.MiscChannels).map((e: any) => e.toLowerCase());
 
         return channels.filter(Utils.isAnyOfPredicate(miscChannelNames, Utils.mapToNameTransform()));
     }
@@ -226,6 +225,10 @@ export default abstract class Utils {
 
     public static displayMiscChannels(guild: Discord.Guild | null): string {
         const miscChannels = Utils.getMiscChannels(guild);
+
+        if (miscChannels.isEmpty()) {
+            return "";
+        }
 
         return `> **OTHER**: ${miscChannels.map((e) => e.name).join(", ")}`;
     }

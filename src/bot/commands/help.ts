@@ -1,10 +1,9 @@
 import Discord from "discord.js";
+import config from "../../config/config";
 import runnerConfig from "../../config/runner";
 import Command from "../../lib/Command";
 import CommandParameters from "../../lib/CommandParameters";
 import Utils from "../../util/Utils";
-import config from "../../config/config";
-
 
 export default class extends Command {
     public constructor() {
