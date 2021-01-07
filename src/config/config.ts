@@ -1,5 +1,5 @@
 export default {
-    guildId: process.env.GUILD_ID,
+    guildId: process.env.GUILD_ID as string,
     rootDirPath: process.cwd(),
     cmdPrefix: "$",
     coco: {

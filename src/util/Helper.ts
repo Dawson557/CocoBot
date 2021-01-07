@@ -3,7 +3,6 @@ import Discord, { GuildChannel } from "discord.js";
 import Client from "../lib/Client";
 import Logger from "./Logger";
 import Utils from "./Utils";
-import config from "../config/config";
 
 type IdResolvable = string | Discord.User | Discord.GuildMember | Discord.Role | Discord.Channel;
 
@@ -14,6 +13,8 @@ export default class Helper extends Discord.Guild {
 
     private log: Logger;
 
+    private configs: any;
+
     public constructor(client: Client) {
         super(client, {});
 
@@ -22,6 +23,7 @@ export default class Helper extends Discord.Guild {
             this.guild = guild;
         }
         this.log = client.log;
+        this.configs = client.configs;
 
         // eslint-disable-next-line no-underscore-dangle
         this.channelsByCategoryMap = this._createChannelsByCategoryMap();
@@ -235,7 +237,7 @@ export default class Helper extends Discord.Guild {
 
     public checkCommandUsedInAppropriateChannel(channel: Discord.TextChannel | Discord.DMChannel): void {
         if (!Utils.isCommandUsedInAppropriateChannel(channel)) {
-            const botChannel = this.getChannelById(config.channelIds.BotRequestChannel);
+            const botChannel = this.getChannelById(this.configs.channelIds.BotRequestChannel);
             throw new Error(`Use me in ${botChannel} you shit head :poop:`);
         }
     }

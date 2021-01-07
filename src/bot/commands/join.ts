@@ -1,9 +1,9 @@
 import Discord from "discord.js";
 import runnerConfig from "../../config/runner";
-import UserIds from "../../config/UserIds";
 import Command from "../../lib/Command";
 import CommandParameters from "../../lib/CommandParameters";
 import Utils from "../../util/Utils";
+import config from "../../config/config";
 
 export default class extends Command {
     public constructor() {
@@ -33,7 +33,7 @@ export default class extends Command {
 
             // Ensure last message by Coco and was involving a joined alert.
             if (destinationChannel.lastMessage
-                && destinationChannel.lastMessage.author?.id === UserIds.CocoBot
+                && destinationChannel.lastMessage.author?.id === config.coco.clientId
                 && destinationChannel.lastMessage.content.includes(joinedAlertSuffix)) {
                 const { lastMessage } = destinationChannel;
                 const lastMessageMemberMentions = lastMessage.mentions.members;
