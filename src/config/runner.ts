@@ -1,5 +1,5 @@
 import CommandConfig from "../lib/CommandConfig";
-import MessageIds from "./MessageIds";
+import config from "./config";
 
 const ping: CommandConfig = {
     name: "ping",
@@ -10,7 +10,7 @@ const ping: CommandConfig = {
     lowerCaseArgs: false,
     template: "",
     helpMessageInfo: {
-        messageId: MessageIds.PingCommandTemplate,
+        messageId: config.MessageIds.PingCommandTemplate,
         channelName: "dev-channel",
         categoryName: "Admin Channels",
     },
@@ -25,7 +25,7 @@ const join: CommandConfig = {
     lowerCaseArgs: false,
     template: "",
     helpMessageInfo: {
-        messageId: MessageIds.JoinCommandTemplate,
+        messageId: config.MessageIds.JoinCommandTemplate,
         channelName: "dev-channel",
         categoryName: "Admin Channels",
     },
@@ -40,7 +40,7 @@ const leave: CommandConfig = {
     lowerCaseArgs: false,
     template: "",
     helpMessageInfo: {
-        messageId: MessageIds.LeaveCommandTemplate,
+        messageId: config.MessageIds.LeaveCommandTemplate,
         channelName: "dev-channel",
         categoryName: "Admin Channels",
     },
@@ -55,7 +55,7 @@ const ls: CommandConfig = {
     lowerCaseArgs: false,
     template: "",
     helpMessageInfo: {
-        messageId: MessageIds.LsCommandTemplate,
+        messageId: config.MessageIds.LsCommandTemplate,
         channelName: "dev-channel",
         categoryName: "Admin Channels",
     },
@@ -70,7 +70,7 @@ const help: CommandConfig = {
     lowerCaseArgs: false,
     template: "",
     helpMessageInfo: {
-        messageId: MessageIds.HelpCommandMessage,
+        messageId: config.MessageIds.HelpCommandMessage,
         channelName: "dev-channel",
         categoryName: "Admin Channels",
     },
@@ -85,7 +85,7 @@ const stats: CommandConfig = {
     lowerCaseArgs: false,
     template: "",
     helpMessageInfo: {
-        messageId: MessageIds.StatsCommandTemplate,
+        messageId: config.MessageIds.StatsCommandTemplate,
         channelName: "dev-channel",
         categoryName: "Admin Channels",
     },
@@ -100,7 +100,7 @@ const echo: CommandConfig = {
     lowerCaseArgs: false,
     template: "",
     helpMessageInfo: {
-        messageId: MessageIds.EchoCommandTemplate,
+        messageId: config.MessageIds.EchoCommandTemplate,
         channelName: "dev-channel",
         categoryName: "Admin Channels",
     },
@@ -115,7 +115,7 @@ const sort: CommandConfig = {
     lowerCaseArgs: false,
     template: "",
     helpMessageInfo: {
-        messageId: MessageIds.SortCommandTemplate,
+        messageId: config.MessageIds.SortCommandTemplate,
         channelName: "dev-channel",
         categoryName: "Admin Channels",
     },
@@ -130,7 +130,7 @@ const count: CommandConfig = {
     lowerCaseArgs: false,
     template: "",
     helpMessageInfo: {
-        messageId: MessageIds.CountCommandTemplate,
+        messageId: config.MessageIds.CountCommandTemplate,
         channelName: "dev-channel",
         categoryName: "Admin Channels",
     },
