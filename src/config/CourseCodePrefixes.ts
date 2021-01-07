@@ -18,6 +18,7 @@ enum CourseCodePrefixes {
     PHYS,
     SOEN,
     MIAE,
+    MAST,
     // Gradute server course codes
     CHME,
     INSE
